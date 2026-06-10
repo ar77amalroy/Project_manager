@@ -1,5 +1,26 @@
+/**
+ * @fileoverview Controller layer for Project CRUD operations.
+ *
+ * Each function extracts data from the Express request, delegates to
+ * the in-memory store, and sends a JSON response. Errors are forwarded
+ * to the global error handler via `next()`.
+ *
+ * @module controllers/projectController
+ */
+
 const store = require('../store/inMemoryStore');
 
+/**
+ * Creates a new project from the request body and persists it in the store.
+ *
+ * Responds with HTTP 201 and the newly created project object, including
+ * the server-generated `id`, `createdAt`, and `updatedAt` timestamps.
+ *
+ * @param {import('express').Request} req  - Express request; expects `name`, `description`, `ownerId`, and `status` in `req.body`.
+ * @param {import('express').Response} res - Express response; sends the created project as JSON.
+ * @param {import('express').NextFunction} next - Express next middleware; called on error.
+ * @returns {void}
+ */
 const createProject = (req, res, next) => {
   try {
     const { name, description, ownerId, status } = req.body;
@@ -10,6 +31,23 @@ const createProject = (req, res, next) => {
   }
 };
 
+/**
+ * Retrieves a paginated, optionally filtered and searchable list of projects.
+ *
+ * Supports the following query parameters:
+ * - `page`   (number, default 1)  — page number (clamped to >= 1).
+ * - `limit`  (number, default 10) — items per page (clamped to 1–50).
+ * - `status` (string, optional)   — filter by project status (`active` | `inactive` | `completed`).
+ * - `search` (string, optional)   — case-insensitive substring match against `name` and `description`.
+ *
+ * Responds with HTTP 200 and a JSON object:
+ * `{ data: Project[], total: number, page: number, limit: number, totalPages: number }`.
+ *
+ * @param {import('express').Request} req  - Express request with optional query parameters.
+ * @param {import('express').Response} res - Express response; sends paginated result as JSON.
+ * @param {import('express').NextFunction} next - Express next middleware; called on error.
+ * @returns {void}
+ */
 const getAllProjects = (req, res, next) => {
   try {
     let { page, limit, status, search } = req.query;
@@ -58,6 +96,17 @@ const getAllProjects = (req, res, next) => {
   }
 };
 
+/**
+ * Retrieves a single project by its unique identifier.
+ *
+ * Responds with HTTP 200 and the project object if found, or HTTP 404
+ * with an error message if no project matches the given ID.
+ *
+ * @param {import('express').Request} req  - Express request; expects `id` in `req.params`.
+ * @param {import('express').Response} res - Express response; sends the project or a 404 error.
+ * @param {import('express').NextFunction} next - Express next middleware; called on error.
+ * @returns {void}
+ */
 const getProjectById = (req, res, next) => {
   try {
     const { id } = req.params;
@@ -73,6 +122,20 @@ const getProjectById = (req, res, next) => {
   }
 };
 
+/**
+ * Updates an existing project with the provided fields.
+ *
+ * Only the fields present in the request body are updated (partial update).
+ * The `id` and `createdAt` fields are immutable and preserved automatically.
+ * `updatedAt` is refreshed on every successful update.
+ *
+ * Responds with HTTP 200 and the updated project, or HTTP 404 if not found.
+ *
+ * @param {import('express').Request} req  - Express request; expects `id` in `req.params` and optional `name`, `description`, `ownerId`, `status` in `req.body`.
+ * @param {import('express').Response} res - Express response; sends the updated project or a 404 error.
+ * @param {import('express').NextFunction} next - Express next middleware; called on error.
+ * @returns {void}
+ */
 const updateProject = (req, res, next) => {
   try {
     const { id } = req.params;
@@ -97,6 +160,17 @@ const updateProject = (req, res, next) => {
   }
 };
 
+/**
+ * Permanently deletes a project by its unique identifier.
+ *
+ * Responds with HTTP 200 and a success message if the project was deleted,
+ * or HTTP 404 if no project matches the given ID.
+ *
+ * @param {import('express').Request} req  - Express request; expects `id` in `req.params`.
+ * @param {import('express').Response} res - Express response; sends a success message or a 404 error.
+ * @param {import('express').NextFunction} next - Express next middleware; called on error.
+ * @returns {void}
+ */
 const deleteProject = (req, res, next) => {
   try {
     const { id } = req.params;
