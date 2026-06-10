@@ -20,7 +20,7 @@ const ProjectList = ({ projects, onEdit, onDelete, isLoading }) => {
               <div className="skeleton h-3 w-5/6" />
               <div className="skeleton h-3 w-2/3" />
             </div>
-            <div className="flex justify-between items-center pt-3 border-t" style={{ borderColor: 'rgba(0, 0, 0, 0.06)' }}>
+            <div className="flex justify-between items-center pt-3 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.06)' }}>
               <div className="skeleton h-3 w-24" />
               <div className="flex gap-2">
                 <div className="skeleton h-8 w-8 rounded-lg" />

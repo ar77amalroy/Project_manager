@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import ProjectList from '@/components/ProjectList';
 import ProjectForm from '@/components/ProjectForm';
 import Pagination from '@/components/Pagination';
+import SoftAurora from '@/components/SoftAurora';
 import {
   getProjects,
   createProject,
@@ -134,12 +135,32 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <SoftAurora
+          speed={0.5}
+          scale={1.3}
+          brightness={1.5}
+          color1="#22d3ee"
+          color2="#a78bfa"
+          noiseFrequency={2.0}
+          noiseAmplitude={1.3}
+          bandHeight={0.55}
+          bandSpread={1.3}
+          octaveDecay={0.15}
+          layerOffset={0.4}
+          colorSpeed={0.8}
+          enableMouseInteraction={true}
+          mouseInfluence={0.25}
+        />
+      </div>
       <header className="animate-fade-in" style={{
-        background: 'rgba(255, 255, 255, 0.4)',
+        background: 'rgba(5, 10, 20, 0.5)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.6)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        position: 'relative',
+        zIndex: 1,
       }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -166,7 +187,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5" style={{ animation: 'fadeIn 0.5s ease-out 0.1s both' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5" style={{ animation: 'fadeIn 0.5s ease-out 0.1s both', position: 'relative', zIndex: 1 }}>
         <div className="flex flex-col gap-4">
           <div className="relative w-full">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -199,17 +220,17 @@ export default function Home() {
                   fontWeight: 600,
                   cursor: 'pointer',
                   border: statusFilter === option.value
-                    ? option.value === 'active' ? '1px solid rgba(5, 150, 105, 0.3)'
-                      : option.value === 'inactive' ? '1px solid rgba(100, 116, 139, 0.3)'
-                      : option.value === 'completed' ? '1px solid rgba(37, 99, 235, 0.3)'
-                      : '1px solid rgba(8, 145, 178, 0.3)'
-                    : '1px solid rgba(0, 0, 0, 0.08)',
+                    ? option.value === 'active' ? '1px solid rgba(52, 211, 153, 0.3)'
+                      : option.value === 'inactive' ? '1px solid rgba(148, 163, 184, 0.3)'
+                      : option.value === 'completed' ? '1px solid rgba(96, 165, 250, 0.3)'
+                      : '1px solid rgba(34, 211, 238, 0.3)'
+                    : '1px solid rgba(255, 255, 255, 0.08)',
                   background: statusFilter === option.value
                     ? option.value === 'active' ? 'var(--accent-green-bg)'
                       : option.value === 'inactive' ? 'var(--accent-gray-bg)'
                       : option.value === 'completed' ? 'var(--accent-blue-bg)'
-                      : 'rgba(8, 145, 178, 0.1)'
-                    : 'rgba(255, 255, 255, 0.5)',
+                      : 'rgba(34, 211, 238, 0.12)'
+                    : 'rgba(15, 23, 42, 0.5)',
                   color: statusFilter === option.value
                     ? option.value === 'active' ? 'var(--accent-green)'
                       : option.value === 'inactive' ? 'var(--accent-gray)'
@@ -230,7 +251,7 @@ export default function Home() {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12" style={{ animation: 'fadeIn 0.6s ease-out 0.2s both' }}>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12" style={{ animation: 'fadeIn 0.6s ease-out 0.2s both', position: 'relative', zIndex: 1 }}>
         {error && (
           <div className="mb-5 p-4 rounded-xl flex items-center gap-3 animate-fade-in"
             style={{ background: 'var(--danger-bg)', border: '1px solid rgba(220, 38, 38, 0.15)' }}>

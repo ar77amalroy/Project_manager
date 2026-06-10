@@ -45,7 +45,7 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
         {truncatedDescription}
       </p>
 
-      <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: 'rgba(0, 0, 0, 0.06)' }}>
+      <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.06)' }}>
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
           Updated {formattedDate}
         </span>
